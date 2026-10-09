@@ -1,0 +1,22 @@
+{
+  "name": "spacetimedb-history-repo",
+  "private": true,
+  "type": "module",
+  "workspaces": ["typescript", "demo/typescript"],
+  "scripts": {
+    "build:web": "node demo/web/build.mjs",
+    "typecheck": "tsc -p demo/web && tsc --noEmit -p typescript && tsc --noEmit -p demo/typescript",
+    "test:server": "tsx tests/server.test.mts",
+    "test:browser": "tsx tests/browser.test.mts",
+    "bench": "tsx tests/bench.mts"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "playwright": "1.63.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "spacetimedb": "2.11.*"
+  }
+}

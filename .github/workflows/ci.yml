@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: 1
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Rust toolchain (wasm32)
+        run: |
+          rustup toolchain install stable --profile minimal --target wasm32-unknown-unknown --component clippy,rustfmt
+          rustup default stable
+      - uses: Swatinem/rust-cache@v2
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - run: npm ci
+      - name: Rust
+        run: |
+          cargo fmt --all --check
+          cargo clippy --release --target wasm32-unknown-unknown -- -D warnings
+      - name: TypeScript
+        run: |
+          npm run build:web
+          npm run typecheck
+      - name: The committed page is up to date
+        run: git diff --exit-code demo/web/dist/index.html
+      - name: C#
+        env:
+          EXPERIMENTAL_WASM_AOT: 1   # what `spacetime build` sets for NativeAOT-LLVM (net10.0) projects
+        run: dotnet build demo/csharp -c Release
+
+  e2e:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        lang: [rust, csharp, typescript]
+    name: e2e (${{ matrix.lang }})
+    steps:
+      - uses: actions/checkout@v5
+      - name: Rust toolchain (wasm32)
+        if: matrix.lang == 'rust'
+        run: |
+          rustup toolchain install stable --profile minimal --target wasm32-unknown-unknown
+          rustup default stable
+      - uses: Swatinem/rust-cache@v2
+        if: matrix.lang == 'rust'
+      - uses: actions/setup-dotnet@v4
+        if: matrix.lang == 'csharp'
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Install SpacetimeDB CLI
+        run: |
+          curl -sSf https://install.spacetimedb.com | sh -s -- --yes
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Start SpacetimeDB
+        run: |
+          nohup spacetime start --in-memory --listen-addr 127.0.0.1:3000 --non-interactive > server.log 2>&1 &
+          for i in $(seq 60); do curl -sf -o /dev/null http://127.0.0.1:3000/v1/ping && break; sleep 1; done
+      - run: npm run build:web
+      - name: Protocol and browser tests
+        run: scripts/e2e.sh ${{ matrix.lang }}
+      - name: Benchmark (tracked vs untracked writes)
+        run: DB=hist-${{ matrix.lang }} npx tsx tests/bench.mts 2>&1 | grep -v 'INFO Connecting'
+      - name: Server log
+        if: failure()
+        run: tail -n 200 server.log || true
