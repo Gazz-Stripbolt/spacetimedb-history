@@ -1,6 +1,6 @@
 {
   "name": "@pogly/spacetimedb-history",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Audit log, per-person undo/redo and point-in-time reads for SpacetimeDB, as a submodule. A stopgap until native time travel. Same schema as history.rs / History.cs.",
   "license": "MIT",
   "type": "module",
