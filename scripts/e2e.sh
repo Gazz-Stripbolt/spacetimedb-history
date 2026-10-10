@@ -10,6 +10,7 @@ HTTP=${HTTP:-http://127.0.0.1:3000}
 DB=${DB:-hist-$LANG_}
 
 cd "$ROOT"
+npm run build -w typescript --silent >/dev/null   # the demos import the packages' compiled dist/
 [[ -f demo/web/dist/index.html && -f demo/typescript/src/page.gen.ts ]] || node demo/web/build.mjs
 echo "== publish demo/$LANG_ as $DB"
 spacetime publish -s "$SERVER" -y "$DB" -p "demo/$LANG_" --delete-data >/dev/null 2>&1

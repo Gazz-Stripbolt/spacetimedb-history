@@ -4,7 +4,7 @@
  * names as demo/rust and demo/csharp; serves the web client at /route/.
  */
 import { schema, table, t, Router, SyncResponse, SenderError, type ReducerCtx } from 'spacetimedb/server';
-import * as history from 'spacetimedb-history';
+import * as history from '@pogly/spacetimedb-history';
 import PAGE from './page.gen';
 
 const BOARD = 'board';

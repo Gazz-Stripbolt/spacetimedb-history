@@ -6,3 +6,4 @@ bin/
 obj/
 demo/typescript/src/page.gen.ts
 demo/typescript/dist/
+/typescript/dist/

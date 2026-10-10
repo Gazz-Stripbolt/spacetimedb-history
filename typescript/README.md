@@ -5,12 +5,21 @@ Complete example: [`demo/typescript`](../demo/typescript/src/index.ts)
 
 ## Install
 
-It isn't on npm yet. Copy this folder into your repo and add it as an npm workspace package, so there's a single
-copy of `spacetimedb`:
+```bash
+npm install @pogly/spacetimedb-history spacetimedb
+```
+
+Use `spacetimedb` 2.11.x, and keep only one copy of it in your module's dependency tree. With two copies,
+`spacetime publish` fails with *"Local module schema inspection failed"*. The package ships compiled JavaScript plus
+its TypeScript source, which is where the types come from.
+
+To work on it from a clone instead, add this folder to your npm workspaces next to your module:
 
 ```jsonc
-{ "private": true, "workspaces": ["spacetimedb-history", "my-module"] }       // repo root
-{ "dependencies": { "spacetimedb": "2.11.*", "spacetimedb-history": "0.1.0" } } // my-module
+// package.json at your repo root
+{ "private": true, "workspaces": ["spacetimedb-history/typescript", "my-module"] }
+// my-module/package.json
+{ "dependencies": { "spacetimedb": "2.11.*", "@pogly/spacetimedb-history": "0.1.0" } }
 ```
 
 ## Wire it up
@@ -20,7 +29,7 @@ view as one-line wrappers. Their names then match the Rust and C# modules exactl
 
 ```typescript
 import { schema, table, t } from 'spacetimedb/server';
-import * as history from 'spacetimedb-history';
+import * as history from '@pogly/spacetimedb-history';
 
 const note = table({ name: 'note', public: true }, { id: t.u64().primaryKey().autoInc(), text: t.string(), x: t.f32(), y: t.f32() });
 const spacetimedb = schema({ note, history });
