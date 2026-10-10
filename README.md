@@ -12,6 +12,7 @@ over any tracked table, and **retention** that cleans up after itself. Available
 [![CI](https://github.com/Gazz-Stripbolt/spacetimedb-history/actions/workflows/ci.yml/badge.svg)](https://github.com/Gazz-Stripbolt/spacetimedb-history/actions/workflows/ci.yml)
 ![SpacetimeDB 2.11](https://img.shields.io/badge/SpacetimeDB-2.11-e8730c)
 ![TypeScript submodule](https://img.shields.io/badge/TypeScript-submodule-3178c6)
+[![npm](https://img.shields.io/npm/v/@pogly/spacetimedb-history?label=npm%20%40pogly%2Fspacetimedb-history&color=cb3837)](https://www.npmjs.com/package/@pogly/spacetimedb-history)
 ![Rust](https://img.shields.io/badge/Rust-drop--in-b7410e)
 ![C#](https://img.shields.io/badge/C%23-drop--in-512bd4)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -37,7 +38,7 @@ over any tracked table, and **retention** that cleans up after itself. Available
 |---|---|
 | **Rust**: add history to a Rust module | [`rust/`](rust): `history.rs`, one drop-in file |
 | **C#**: add history to a C# module | [`csharp/`](csharp): `History.cs`, one drop-in file |
-| **TypeScript**: add history to a TS module, as a **submodule** | [`typescript/`](typescript): the `spacetimedb-history` submodule |
+| **TypeScript**: add history to a TS module, as a **submodule** | [`typescript/`](typescript): `npm install @pogly/spacetimedb-history` ([npm](https://www.npmjs.com/package/@pogly/spacetimedb-history)) |
 | **See it working**: a shared board with undo and a time slider | [`demo/`](demo): one demo per language, sharing one web page |
 | **The tables, procedures and value format**, to build a client | [`docs/PROTOCOL.md`](docs/PROTOCOL.md) |
 | **Numbers and gotchas** | [`docs/FINDINGS.md`](docs/FINDINGS.md) |
