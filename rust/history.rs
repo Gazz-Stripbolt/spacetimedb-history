@@ -362,16 +362,18 @@ pub fn query(ctx: &ReducerContext, who: Identity, q: &HistoryQuery) -> Vec<Histo
         0 => 100,
         n => n.min(500),
     } as usize;
+    // Bound first: since 2.12 a table handle's `iter()` borrows the handle.
+    let changes = ctx.db.history_change();
     let candidates: Box<dyn Iterator<Item = HistoryChange>> = if let Some(g) = q.group_id {
-        Box::new(ctx.db.history_change().group_id().filter(g))
+        Box::new(changes.group_id().filter(g))
     } else if let (Some(t), Some(k)) = (&q.table_name, &q.row_key) {
-        Box::new(ctx.db.history_change().by_row().filter((t, k)))
+        Box::new(changes.by_row().filter((t, k)))
     } else if let Some(a) = q.actor {
-        Box::new(ctx.db.history_change().actor().filter(a))
+        Box::new(changes.actor().filter(a))
     } else if let Some(t) = &q.table_name {
-        Box::new(ctx.db.history_change().table_name().filter(t))
+        Box::new(changes.table_name().filter(t))
     } else {
-        Box::new(ctx.db.history_change().iter())
+        Box::new(changes.iter())
     };
     let mut out: Vec<HistoryChange> = candidates
         .filter(|c| q.table_name.as_ref().is_none_or(|t| &c.table_name == t))

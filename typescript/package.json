@@ -1,6 +1,6 @@
 {
   "name": "@pogly/spacetimedb-history",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Audit log, per-person undo/redo and point-in-time reads for SpacetimeDB, as a submodule. A stopgap until native time travel. Same schema as history.rs / History.cs.",
   "license": "MIT",
   "type": "module",
@@ -42,10 +42,10 @@
     "url": "https://github.com/Gazz-Stripbolt/spacetimedb-history/issues"
   },
   "peerDependencies": {
-    "spacetimedb": "2.11.*"
+    "spacetimedb": "2.11.* || 2.12.*"
   },
   "devDependencies": {
-    "spacetimedb": "2.11.*",
+    "spacetimedb": "2.12.*",
     "typescript": "^5.9.0"
   },
   "publishConfig": {
