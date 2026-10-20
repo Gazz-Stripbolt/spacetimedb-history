@@ -142,6 +142,9 @@ await test('point in time: a row and the whole table as they were', async () => 
   const t1 = Timestamp.now();
   await sleep(50);
   await a.r.demoEditNote({ id, text: 'v2' });
+  // Timestamp.now() has millisecond precision and a local call returns in well under 1 ms, so without this
+  // pause t2 can land in the same millisecond as the edit and floor to just before it.
+  await sleep(50);
   const t2 = Timestamp.now();
   await sleep(50);
   await a.r.demoDeleteNotes({ ids: [id] });
