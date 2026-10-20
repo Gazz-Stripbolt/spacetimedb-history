@@ -41,6 +41,9 @@
   "bugs": {
     "url": "https://github.com/Gazz-Stripbolt/spacetimedb-history/issues"
   },
+  "submodule": {
+    "category": "database"
+  },
   "peerDependencies": {
     "spacetimedb": "2.11.* || 2.12.*"
   },
