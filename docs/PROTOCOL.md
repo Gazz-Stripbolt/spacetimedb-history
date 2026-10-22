@@ -7,7 +7,7 @@ consumer defines them as thin wrappers, because a submodule can't reach your tab
 
 ## Values
 
-- **Rows** (`before`, `after`, `value`) are the row's **BSATN** encoding, exactly what SpacetimeDB sends over the wire. Decode
+- **Rows** (`before`, `after`, `value`) are the row's **BSATN** encoding, exactly what Spacetime sends over the wire. Decode
   them with the row type from your generated bindings, e.g. in TypeScript
   `NoteRow.deserialize(new BinaryReader(bytes))`.
 - **`row_key`** is the **lowercase hex of the BSATN of the primary key**. For a `u64` id that's 8 bytes,

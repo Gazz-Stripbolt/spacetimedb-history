@@ -1,6 +1,6 @@
 # Findings
 
-What we learned building history on SpacetimeDB 2.11.
+What we learned building history on Spacetime 2.11.
 
 ## Numbers
 
@@ -27,7 +27,7 @@ reads. Full images keep undo and `row_as_of` simple and exact.
 
 ## Design notes
 
-- **No triggers, so wrappers.** SpacetimeDB modules can't observe writes, so history only sees what goes through
+- **No triggers, so wrappers.** Spacetime modules can't observe writes, so history only sees what goes through
   `tracked::*` (Rust), `HistoryTable` (C#) or `track()` (TS). A raw write to a tracked table is invisible to
   history, and later shows up as an undo conflict on that row, which is the safe outcome.
 - **Why BSATN and not JSON:**
@@ -45,7 +45,7 @@ reads. Full images keep undo and `row_as_of` simple and exact.
 - **Point in time without history uses the current value.** If a row has no recorded changes, `row_as_of` assumes it
   hasn't changed: the only correct answer when every write is tracked, and a wrong one when it isn't.
 
-## SpacetimeDB quirks
+## Spacetime quirks
 
 - **TS: decode with the `spacetimedb` entry point, not `spacetimedb/server`.** The two entry points are separate
   bundles, each with its own `BinaryReader` class. A table's `rowType.deserialize(reader)` (server bundle) calls

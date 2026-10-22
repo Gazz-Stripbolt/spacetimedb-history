@@ -1,6 +1,6 @@
 # spacetimedb-history for TypeScript (submodule)
 
-Audit log, undo/redo and point-in-time reads as a **SpacetimeDB submodule**. Source: [`src/index.ts`](src/index.ts) ·
+Audit log, undo/redo and point-in-time reads as a **Spacetime submodule**. Source: [`src/index.ts`](src/index.ts) ·
 Complete example: [`demo/typescript`](../demo/typescript/src/index.ts)
 
 ## Install

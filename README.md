@@ -2,7 +2,7 @@
 
 # 🔧 Spacetime History
 
-**An audit log, undo/redo and point-in-time reads for SpacetimeDB.**
+**An audit log, undo/redo and point-in-time reads for Spacetime.**
 
 Every change you make through it is recorded in the same transaction: who did it, which action, the row before and
 after. On top of that you get **per-person undo/redo** of whole actions (with conflict detection), a **time slider**
@@ -10,7 +10,7 @@ over any tracked table, and **retention** that cleans up after itself. Available
 (as a submodule)**, all with the same client-facing schema.
 
 [![CI](https://github.com/Gazz-Stripbolt/spacetimedb-history/actions/workflows/ci.yml/badge.svg)](https://github.com/Gazz-Stripbolt/spacetimedb-history/actions/workflows/ci.yml)
-![SpacetimeDB 2.12](https://img.shields.io/badge/SpacetimeDB-2.12-e8730c)
+![Spacetime 2.12](https://img.shields.io/badge/Spacetime-2.12-e8730c)
 ![TypeScript submodule](https://img.shields.io/badge/TypeScript-submodule-3178c6)
 [![npm](https://img.shields.io/npm/v/@pogly/spacetimedb-history?label=npm%20%40pogly%2Fspacetimedb-history&color=cb3837)](https://www.npmjs.com/package/@pogly/spacetimedb-history)
 ![Rust](https://img.shields.io/badge/Rust-drop--in-b7410e)
@@ -27,7 +27,7 @@ over any tracked table, and **retention** that cleans up after itself. Available
 ---
 
 > [!NOTE]
-> **A stopgap until native time travel.** SpacetimeDB plans to let modules read their own commit log. When that
+> **A stopgap until native time travel.** Spacetime plans to let modules read their own commit log. When that
 > ships, prefer it for history and point-in-time reads. This repo keeps the same ideas behind a small API
 > (`query`, `row_as_of`, `table_as_of`, `undo`, `redo`) so moving over later is a change of implementation, not of
 > your app. See [Migrating later](#migrating-later).
@@ -52,7 +52,7 @@ CI runs the same suites against every language:
 
 ## How it works
 
-SpacetimeDB has no triggers, so history can't watch your tables. Instead you write through **tracked wrappers**, and
+Spacetime has no triggers, so history can't watch your tables. Instead you write through **tracked wrappers**, and
 each one records the change in the same transaction:
 
 ```mermaid
@@ -72,7 +72,7 @@ sequenceDiagram
     Note over H: newest "done" group of yours in "board"<br/>every row still equals its "after"? → write "before" values<br/>else refuse: conflict
 ```
 
-- **Values are BSATN**, the encoding SpacetimeDB already uses. Rows round-trip exactly (u64s, identities,
+- **Values are BSATN**, the encoding Spacetime already uses. Rows round-trip exactly (u64s, identities,
   options, enums), it's byte-identical across Rust, C# and TypeScript, and clients decode it with the row types in
   their generated bindings. No serde, and no reflection on wasi.
 - **Groups.** Everything one transaction records is one group. `begin(action, scope)` names it ("move notes") and
@@ -164,12 +164,12 @@ docs/                  PROTOCOL.md · FINDINGS.md · screenshots
 ## Credits
 
 Built by **Tinker** ([@Gazz-Stripbolt](https://github.com/Gazz-Stripbolt)), the resident gadgeteer for the
-[Pogly](https://pogly.gg) team: collaborative stream overlays, powered by SpacetimeDB. Pogly's own undo, where
+[Pogly](https://pogly.gg) team: collaborative stream overlays, powered by Spacetime. Pogly's own undo, where
 several elements change together and should come back together, is the motivating case.
 
-More SpacetimeDB building blocks from this workshop: **[github.com/Gazz-Stripbolt](https://github.com/Gazz-Stripbolt)**.
+More Spacetime building blocks from this workshop: **[github.com/Gazz-Stripbolt](https://github.com/Gazz-Stripbolt)**.
 
-🚀 **New to SpacetimeDB?** If you sign up through **[this referral link](https://spacetimedb.com/?referral=Lethalchip)**,
+🚀 **New to Spacetime?** If you sign up through **[this referral link](https://spacetimedb.com/?referral=Lethalchip)**,
 Pogly gets free recurring energy. Thank you!
 
 ## License
