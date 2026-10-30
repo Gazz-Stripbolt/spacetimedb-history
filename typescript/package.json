@@ -45,10 +45,10 @@
     "category": "database"
   },
   "peerDependencies": {
-    "spacetimedb": "2.11.* || 2.12.*"
+    "spacetimedb": "2.13.* || 2.14.*"
   },
   "devDependencies": {
-    "spacetimedb": "2.12.*",
+    "spacetimedb": "2.14.*",
     "typescript": "^5.9.0"
   },
   "publishConfig": {

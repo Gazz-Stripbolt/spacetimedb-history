@@ -9,9 +9,12 @@ Complete example: [`demo/typescript`](../demo/typescript/src/index.ts)
 npm install @pogly/spacetimedb-history spacetimedb
 ```
 
-Use `spacetimedb` 2.11.x or 2.12.x, and keep only one copy of it in your module's dependency tree. With two copies,
+Use `spacetimedb` 2.13.x or 2.14.x, and keep only one copy of it in your module's dependency tree. With two copies,
 `spacetime publish` fails with *"Local module schema inspection failed"*. The package ships compiled JavaScript plus
 its TypeScript source, which is where the types come from.
+
+A module built with the 2.14 library needs a 2.14 or newer host: the library's HTTP handler export changed, and older
+hosts reject it ([release notes](https://github.com/clockworklabs/SpacetimeDB/releases/tag/v2.14.0)). If your host is still on 2.13, stay on `spacetimedb` 2.13.x.
 
 To work on it from a clone instead, add this folder to your npm workspaces next to your module:
 
@@ -19,7 +22,7 @@ To work on it from a clone instead, add this folder to your npm workspaces next 
 // package.json at your repo root
 { "private": true, "workspaces": ["spacetimedb-history/typescript", "my-module"] }
 // my-module/package.json
-{ "dependencies": { "spacetimedb": "2.12.*", "@pogly/spacetimedb-history": "*" } }
+{ "dependencies": { "spacetimedb": "2.14.*", "@pogly/spacetimedb-history": "*" } }
 ```
 
 ## Wire it up

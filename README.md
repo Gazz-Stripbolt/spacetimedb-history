@@ -10,7 +10,7 @@ over any tracked table, and **retention** that cleans up after itself. Available
 (as a submodule)**, all with the same client-facing schema.
 
 [![CI](https://github.com/Gazz-Stripbolt/spacetimedb-history/actions/workflows/ci.yml/badge.svg)](https://github.com/Gazz-Stripbolt/spacetimedb-history/actions/workflows/ci.yml)
-![Spacetime 2.12](https://img.shields.io/badge/Spacetime-2.12-e8730c)
+![Spacetime 2.14](https://img.shields.io/badge/Spacetime-2.14-e8730c)
 ![TypeScript submodule](https://img.shields.io/badge/TypeScript-submodule-3178c6)
 [![npm](https://img.shields.io/npm/v/@pogly/spacetimedb-history?label=npm%20%40pogly%2Fspacetimedb-history&color=cb3837)](https://www.npmjs.com/package/@pogly/spacetimedb-history)
 ![Rust](https://img.shields.io/badge/Rust-drop--in-b7410e)
@@ -90,7 +90,7 @@ sequenceDiagram
 ## Quick start (Rust)
 
 ```rust
-// src/lib.rs (Cargo.toml: spacetimedb = { version = "2.12.*", features = ["unstable"] })
+// src/lib.rs (Cargo.toml: spacetimedb = { version = "2.14.*", features = ["unstable"] })
 pub mod history;   // copy rust/history.rs to src/history.rs
 
 history_tables! {
@@ -131,6 +131,8 @@ VM. Details are in [FINDINGS](docs/FINDINGS.md).
 
 ## Good to know
 
+- **Needs a 2.14 host.** Modules built with the 2.14 libraries export a changed HTTP handler ABI, and older hosts reject
+  them ([release notes](https://github.com/clockworklabs/SpacetimeDB/releases/tag/v2.14.0)).
 - **Only tracked writes are recorded.** Anything that writes through the raw table handle bypasses history, and undo
   will then report a conflict on those rows (which is the right answer). Keep raw writes to tracked tables out of
   your code; `grep` for them.
